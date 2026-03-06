@@ -188,6 +188,42 @@
             <p class="cta-btn select-pricing interactive-btn">Select Pricing</p>
         </div>
     </section>
+
+    <section class="portal reveal" id="portal">
+        <div class="portal-card">
+            <h4>Account & Payment Portal</h4>
+            <p class="portal-copy">Create your account, login, and complete payment for a premium plan.</p>
+            <div class="auth-grid">
+                <form id="signup-form" class="portal-form">
+                    <h5>Sign up</h5>
+                    <input type="text" id="signup-name" placeholder="Name" required>
+                    <input type="email" id="signup-email" placeholder="Email" required>
+                    <input type="password" id="signup-password" placeholder="Password" required minlength="6">
+                    <button type="submit" class="cta-btn interactive-btn">Create Account</button>
+                </form>
+
+                <form id="login-form" class="portal-form">
+                    <h5>Log in</h5>
+                    <input type="email" id="login-email" placeholder="Email" required>
+                    <input type="password" id="login-password" placeholder="Password" required>
+                    <button type="submit" class="cta-btn interactive-btn">Log In</button>
+                </form>
+            </div>
+
+            <div class="payment-actions">
+                <p id="auth-state">Not logged in.</p>
+                <div class="payment-buttons">
+                    <button id="pay-professional" class="cta-btn interactive-btn" disabled>Pay Professional ($15)</button>
+                    <button id="pay-teams" class="cta-btn-outline interactive-btn" disabled>Pay Teams ($25)</button>
+                    <button id="logout" class="cta-lnk" type="button">Log out</button>
+                </div>
+            </div>
+
+            <div id="portal-message" role="status" aria-live="polite"></div>
+            <div id="payment-history"></div>
+        </div>
+    </section>
+
     </main>
 
     <script src="app.js"></script>
