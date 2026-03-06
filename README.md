@@ -1,45 +1,68 @@
-# altschool-assignment-project
-# README
+# Scissor Full-Stack App
 
-This is the README file for the provided HTML and CSS code.
+This project is now a full-stack web application with:
+- Node.js + Express backend
+- MongoDB persistence (users + transactions)
+- JWT authentication (signup/login/me)
+- Stripe Checkout payment integration
+- Frontend wired to backend APIs
 
-## Table of Contents
-- [Introduction](#introduction)
-- [HTML Structure](#html-structure)
-- [CSS Styles](#css-styles)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+## Project Structure
 
-## Introduction
-This code represents a web page layout for a URL shortening service. It includes HTML markup for the page structure and CSS styles to define the visual appearance of the elements.
+- `server.js` - Express server and static hosting
+- `routes/auth.js` - Signup/login/profile APIs
+- `routes/payment.js` - Stripe checkout, webhook, history, confirmation
+- `models/User.js` - User schema
+- `models/Transaction.js` - Payment transaction schema
+- `middleware/auth.js` - JWT auth middleware
+- `index.html`, `style.css`, `app.js` - Frontend and API integration
+- `.env.example` - Environment variables template
+- `render.yaml` - Render deployment blueprint
 
-## HTML Structure
-The HTML code is structured as follows:
+## API Endpoints
 
-- The `<!DOCTYPE html>` declaration specifies the document type.
-- The `<html>` element represents the root of an HTML document.
-- The `<head>` section contains metadata and external dependencies such as CSS stylesheets and fonts.
-- The `<body>` section contains the main content of the web page.
-- The page is divided into different sections, each represented by a `<section>` element.
-- Inside the sections, various elements such as `<div>`, `<header>`, `<nav>`, `<ul>`, `<li>`, `<h1>`, `<p>`, and `<img>` are used to structure and display the content.
+### Auth
+- `POST /api/auth/signup`
+- `POST /api/auth/login`
+- `GET /api/auth/me` (Bearer token required)
 
-## CSS Styles
-The CSS code defines the visual styles for the HTML elements. It includes styles for the page layout, fonts, colors, and other visual properties. The code uses various CSS selectors to target specific elements and apply the desired styles.
+### Payments
+- `POST /api/payments/create-checkout-session` (Bearer token required)
+- `GET /api/payments/confirm-session/:sessionId` (Bearer token required)
+- `GET /api/payments/history` (Bearer token required)
+- `POST /api/payments/webhook` (Stripe webhook)
 
-## Usage
-To use this code, follow these steps:
+## Local Setup
 
-1. Create an HTML file and open it in a web browser.
-2. Copy the HTML code into the file, replacing any existing content.
-3. Save the file with an `.html` extension.
-4. Create a CSS file and link it to the HTML file using the `<link>` tag in the `<head>` section.
-5. Copy the CSS code into the CSS file, replacing any existing content.
-6. Save the CSS file with a `.css` extension.
-7. Make sure to include any external dependencies referenced in the HTML code, such as fonts or images, in the appropriate directories relative to the HTML file.
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Copy env template:
+   ```bash
+   cp .env.example .env
+   ```
+3. Set env values in `.env`.
+4. Start server:
+   ```bash
+   npm start
+   ```
 
-## Contributing
-Contributions to this code are welcome. If you find any issues or have suggestions for improvements, please feel free to contribute by submitting a pull request.
+## Render Deployment
 
-## License
-This code is provided under the [MIT License](https://opensource.org/licenses/MIT). You are free to use, modify, and distribute the code for both commercial and non-commercial purposes. See the `LICENSE` file for more details.
+1. Push repo to GitHub.
+2. Create a **Web Service** on Render using this repo.
+3. Use:
+   - Build command: `npm install`
+   - Start command: `npm start`
+4. Add environment variables from `.env.example`.
+5. Configure Stripe webhook URL:
+   - `https://<your-render-domain>/api/payments/webhook`
+
+## End-to-End Flow
+
+1. Sign up from the portal form.
+2. Log in.
+3. Click a payment button.
+4. Complete payment in Stripe Checkout.
+5. Redirect returns to app and confirms transaction status.
