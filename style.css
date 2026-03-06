@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 @font-face {
@@ -26,6 +27,22 @@
 html {
     text-align: center;
     color: #141414;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #fff;
+}
+
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background: linear-gradient(90deg, #0065FE, #37a0ff);
+    z-index: 9999;
+    transition: width 0.12s linear;
 }
 
 header {
@@ -34,7 +51,20 @@ header {
     width: 83%;
     max-width: 1200px;
     margin: auto;
-    padding: 1.5rem 1.5rem 1.5rem;
+    padding: 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    backdrop-filter: blur(16px);
+    transition: padding 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.site-header.scrolled {
+    padding-top: 0.9rem;
+    padding-bottom: 0.9rem;
+    background-color: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 10px 28px rgba(0, 49, 140, 0.08);
+    border-radius: 16px;
 }
 
 li {
@@ -51,8 +81,24 @@ nav>ul>li {
     font-family: gilroy-medium;
     font-size: 18px;
     line-height: 21px;
-    letter-spacing: 0em;
     text-align: left;
+    position: relative;
+    cursor: pointer;
+}
+
+nav>ul>li::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 0;
+    height: 2px;
+    background: #0065FE;
+    transition: width 0.25s ease;
+}
+
+nav>ul>li:hover::after {
+    width: 100%;
 }
 
 .active {
@@ -63,7 +109,6 @@ nav>ul>li {
     font-family: Gilroy-SemiBold;
     font-size: 16px;
     line-height: 19px;
-    letter-spacing: 0em;
     text-align: left;
     color: #0065FE;
 }
@@ -72,33 +117,34 @@ nav>ul>li {
     font-family: gilroy-semibold;
     font-size: 16px;
     line-height: 12px;
-    letter-spacing: 0em;
     text-align: left;
     color: #FFFFFF;
     background-color: #0065FE;
-    width: Fixed (142px);
-    height: Fixed (44px);
-    padding: 12px 24px 12px 24px;
+    padding: 12px 24px;
     border-radius: 100px;
-    gap: 10px;
+}
+
+.interactive-btn {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    cursor: pointer;
+}
+
+.interactive-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 101, 254, 0.25);
 }
 
 .cta-btn-outline {
     font-family: gilroy-semibold;
     font-size: 16px;
     line-height: 12px;
-    letter-spacing: 0em;
     text-align: left;
     background-color: #FFFFFF;
     color: #0065FE;
-    width: Fixed (142px);
-    height: Fixed (44px);
-    padding: 12px 24px 12px 24px;
+    padding: 12px 24px;
     border: #0065FE 1px solid;
     border-radius: 100px;
 }
-
-/* Hero section  */
 
 .hero {
     background-image: linear-gradient(#F6EEEB, #FFFFFF);
@@ -118,7 +164,6 @@ h1 {
     font-family: Gilroy-Bold;
     font-size: 48px;
     line-height: 96px;
-    letter-spacing: 0em;
     text-align: center;
 }
 
@@ -135,7 +180,6 @@ span {
     font-family: Gilroy-Medium;
     font-size: 18px;
     line-height: 28px;
-    letter-spacing: 0em;
     text-align: center;
     width: 80%;
     margin: auto;
@@ -149,12 +193,14 @@ span {
     align-items: center;
 }
 
+.floating-card {
+    transition: transform 0.22s ease;
+}
+
 .platform>img {
     width: 100%;
     max-width: 1440px;
 }
-
-/* features section */
 
 .data-stat {
     background-color: #F9FBFD;
@@ -174,7 +220,6 @@ span {
     font-family: Gilroy-Bold;
     font-size: 40px;
     line-height: 48px;
-    letter-spacing: 0em;
     text-align: left;
 }
 
@@ -182,7 +227,6 @@ span {
     font-family: Gilroy-SemiBold;
     font-size: 32px;
     line-height: 40px;
-    letter-spacing: 0em;
     text-align: left;
 }
 
@@ -190,7 +234,6 @@ span {
     font-family: Gilroy-Medium;
     font-size: 16px;
     line-height: 24px;
-    letter-spacing: 0em;
     text-align: left;
 }
 
@@ -225,7 +268,6 @@ span {
     font-family: Gilroy-Bold;
     font-size: 40px;
     line-height: 32px;
-    letter-spacing: 0em;
     text-align: left;
 }
 
@@ -238,20 +280,23 @@ span {
     font-family: Gilroy-Medium;
     font-size: 16px;
     line-height: 28px;
-    letter-spacing: 0em;
     text-align: left;
     padding: 1.5rem 5rem 1.5rem 1.8rem;
 }
 
 .features-item {
     text-align: left;
+    transition: transform 0.25s ease;
+}
+
+.features-item:hover {
+    transform: translateY(-6px);
 }
 
 .features-item h5 {
     font-family: Gilroy-SemiBold;
     font-size: 32px;
     line-height: 28px;
-    letter-spacing: 0em;
     text-align: left;
     padding: 2rem 0 1rem;
 }
@@ -260,23 +305,20 @@ span {
     font-family: Gilroy-Medium;
     font-size: 16px;
     line-height: 24px;
-    letter-spacing: 0em;
     text-align: left;
-    padding: 0 0 4rem 0;
+    padding: 0 0 4rem;
 }
 
 .odd {
     padding-right: 3rem;
 }
 
-/* Pricing section */
-
 .pricing-hero {
     width: 50%;
     margin: 4rem auto;
 }
 
-.pricing-hero > div {
+.pricing-hero>div {
     display: flex;
     align-items: center;
     margin: auto;
@@ -286,7 +328,6 @@ span {
     font-family: Gilroy-Bold;
     font-size: 40px;
     line-height: 48px;
-    letter-spacing: 0em;
     text-align: center;
 }
 
@@ -294,7 +335,6 @@ span {
     font-family: Gilroy-Medium;
     font-size: 16px;
     line-height: 24px;
-    letter-spacing: 0em;
     text-align: center;
     width: 80%;
     margin: auto;
@@ -311,7 +351,6 @@ span {
     font-family: Gilroy-Medium;
     font-size: 24px;
     line-height: 32px;
-    letter-spacing: 0em;
     text-align: left;
     padding-bottom: 2rem;
 }
@@ -320,7 +359,6 @@ span {
     font-family: Gilroy-Bold;
     font-size: 40px;
     line-height: 48px;
-    letter-spacing: 0em;
     text-align: left;
     padding-bottom: 1rem;
 }
@@ -329,7 +367,6 @@ span {
     font-family: Gilroy-Medium;
     font-size: 20px;
     line-height: 32px;
-    letter-spacing: 0em;
     text-align: left;
     padding-bottom: 1rem;
 }
@@ -343,7 +380,6 @@ span {
     font-family: Gilroy-Medium;
     font-size: 14px;
     line-height: 24px;
-    letter-spacing: 0em;
     text-align: left;
     padding: .5rem .5rem .5rem 0;
 }
@@ -355,24 +391,29 @@ span {
     padding: 1.5rem 3.5rem 2rem 4.5rem;
 }
 
-.teams{
+.teams {
     border: solid #005AE2 .4px;
     border-radius: 0 10px 10px 0;
     margin-left: -1px;
     padding: 1.5rem 4.5rem 2rem 3.5rem;
 }
+
 .option-main {
     color: #FFFFFF;
     background-color: #1E3448;
     border-radius: 10px;
     padding: 6rem 5rem 8rem;
+    transition: transform 0.25s ease;
+}
+
+.option-main:hover {
+    transform: translateY(-6px);
 }
 
 .option-main .h5 {
     font-family: Gilroy-Medium;
     font-size: 24px;
     line-height: 32px;
-    letter-spacing: 0em;
     text-align: left;
     padding-bottom: 2rem;
 }
@@ -381,7 +422,6 @@ span {
     font-family: Gilroy-Bold;
     font-size: 40px;
     line-height: 48px;
-    letter-spacing: 0em;
     text-align: left;
     padding-bottom: 1rem;
 }
@@ -390,7 +430,6 @@ span {
     font-family: Gilroy-Medium;
     font-size: 20px;
     line-height: 32px;
-    letter-spacing: 0em;
     text-align: left;
     padding-bottom: 1rem;
 }
@@ -399,7 +438,6 @@ span {
     font-family: Gilroy-Medium;
     font-size: 14px;
     line-height: 24px;
-    letter-spacing: 0em;
     text-align: left;
     padding: .5rem .5rem .7rem 0;
 }
@@ -425,4 +463,15 @@ span {
 .select-pricing {
     margin-left: .5rem;
     padding: 16px 46px;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
